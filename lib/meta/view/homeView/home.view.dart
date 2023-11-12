@@ -1,28 +1,26 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:textscanner/app/routes/app.routes.dart';
 import 'package:textscanner/core/notifier/homeNotifier/home.notifer.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.lightBlue,
-          onPressed: () {
-            Provider.of<HomeNotifer>(context, listen: false)
-                .getImageFromText(context: context);
-          },
-          child: const Icon(
-            Icons.done,
-            color: Colors.white,
-          ),
-        ),
-        backgroundColor: Colors.black54,
-        body: Center(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: const Text("Text Scanner", style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w600),),
+        actions: [
+          IconButton(onPressed: (){
+            Navigator.of(context).pushNamed(AppRoutes.aboutMe);
+          }, icon: const Icon(Icons.info_outline_rounded, color: Colors.white,))
+        ],
+      ),
+      backgroundColor: Colors.black54,
+      body: SingleChildScrollView(
+        child: Center(
           child: Column(
             children: [
               const SizedBox(
@@ -47,7 +45,7 @@ class HomeView extends StatelessWidget {
                       text: ' Out !!',
                       style: TextStyle(
                         fontSize: 20.0,
-                        color: Colors.lightBlueAccent,
+                        color: Colors.blueAccent,
                       ),
                     ),
                   ],
@@ -69,7 +67,7 @@ class HomeView extends StatelessWidget {
                   ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all(Colors.lightBlue),
+                          MaterialStateProperty.all(Colors.blueAccent),
                     ),
                     child: const Text(
                       'Gallery',
@@ -87,7 +85,7 @@ class HomeView extends StatelessWidget {
                   ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all(Colors.lightBlue),
+                          MaterialStateProperty.all(Colors.blueAccent),
                     ),
                     child: const Text(
                       'Camera',
@@ -119,19 +117,21 @@ class HomeView extends StatelessWidget {
                           const SizedBox(
                             height: 20,
                           ),
-                          Text(
-                            Provider.of<HomeNotifer>(context, listen: true)
-                                .finalText!,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.white60,
+                          SelectionArea(
+                            child: Text(
+                              Provider.of<HomeNotifer>(context, listen: true)
+                                  .finalText!,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.white60,
+                              ),
                             ),
                           ),
                           const SizedBox(
                             height: 20,
                           ),
-                          ElevatedButton(
+                          Provider.of<HomeNotifer>(context, listen: true).finishedLoading == true ? ElevatedButton(
                             style: ButtonStyle(
                               backgroundColor:
                                   MaterialStateProperty.all(Colors.lightBlue),
@@ -146,6 +146,23 @@ class HomeView extends StatelessWidget {
                             onPressed: () async {
                               Provider.of<HomeNotifer>(context, listen: false)
                                   .copyTextToClipBoard(context: context);
+                            },
+                          ) :
+                          ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor:
+                              MaterialStateProperty.all(Colors.lightBlue),
+                            ),
+                            child: const Text(
+                              'Convert',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                            onPressed: () async {
+                              Provider.of<HomeNotifer>(context, listen: false)
+                                  .getImageFromText(context: context);
                             },
                           )
                         ],

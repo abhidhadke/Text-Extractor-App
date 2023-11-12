@@ -31,6 +31,7 @@ class Lava extends StatelessWidget {
       initialRoute: AppRoutes.homeRoute,
       theme: ThemeData(
         fontFamily: 'roboto',
+        useMaterial3: true,
       ),
       routes: AppRoutes.routes,
     );

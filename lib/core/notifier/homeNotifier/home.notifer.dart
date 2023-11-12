@@ -10,7 +10,9 @@ class HomeNotifer with ChangeNotifier {
   File? userImage;
   File? get getUserImage => userImage;
   bool loading = false;
+  bool finishLoad = false;
   bool? get getLoading => loading;
+  bool? get finishedLoading => finishLoad;
   String? finalText;
   final textDetector = GoogleMlKit.vision.textDetector();
 
@@ -21,7 +23,7 @@ class HomeNotifer with ChangeNotifier {
 
     if (userImage != null) {
       finalText = '';
-      userImage = await ImageCropper.cropImage(
+      userImage = await ImageCropper().cropImage(
           sourcePath: userImage!.path,
           aspectRatioPresets: [
             CropAspectRatioPreset.square,
@@ -40,6 +42,7 @@ class HomeNotifer with ChangeNotifier {
             minimumAspectRatio: 1.0,
           ));
       loading = true;
+      finishLoad = false;
       notifyListeners();
     } else {
       loading = false;
@@ -64,7 +67,10 @@ class HomeNotifer with ChangeNotifier {
           }
         }
       }
+      finishLoad = true;
+      notifyListeners();
     } else {
+      finishLoad = false;
       showInfo(context: context, text: 'Please Select A Image');
     }
   }
