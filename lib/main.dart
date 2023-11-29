@@ -26,7 +26,7 @@ class Lava extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Text Detector',
+      title: 'Textractor',
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.homeRoute,
       theme: ThemeData(

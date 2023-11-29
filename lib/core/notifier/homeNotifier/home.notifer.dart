@@ -19,9 +19,9 @@ class HomeNotifer with ChangeNotifier {
   Future pickUserImage(
       {required BuildContext context, required ImageSource source}) async {
     final pickedUserImage = await picker.pickImage(source: source);
-    userImage = File(pickedUserImage!.path);
+    userImage = File(pickedUserImage?.path ?? "");
 
-    if (userImage != null) {
+    if (userImage?.path != "") {
       finalText = '';
       userImage = await ImageCropper().cropImage(
           sourcePath: userImage!.path,

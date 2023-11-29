@@ -11,7 +11,7 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: const Text("Text Scanner", style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w600),),
+        title: const Text("Textractor", style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w600),),
         actions: [
           IconButton(onPressed: (){
             Navigator.of(context).pushNamed(AppRoutes.aboutMe);
@@ -110,9 +110,10 @@ class HomeView extends StatelessWidget {
                           SizedBox(
                             height: 200,
                             width: MediaQuery.of(context).size.width,
-                            child: Image.file(
+                            child: (Provider.of<HomeNotifer>(context, listen: false)
+                                .getUserImage != null) ? Image.file(
                                 Provider.of<HomeNotifer>(context, listen: false)
-                                    .getUserImage!),
+                                    .getUserImage!) : const SizedBox(),
                           ),
                           const SizedBox(
                             height: 20,
